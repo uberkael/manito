@@ -27,6 +27,8 @@ server.tool(
 
 /* Listen for connections */
 // No ports, local stdin & stdout
-const transport = new StdioServerTransport
+// const transport = new StdioServerTransport
 // Connect the server to the data transport
-await server.connect(transport);
+// await server.connect(transport);
+
+export { server };
