@@ -1,3 +1,4 @@
+import { execSync } from 'child_process';
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
@@ -8,10 +9,17 @@ const server = new McpServer({
 	version: "1.0",
 })
 
+// Emulate $ from bun
+const $ = (strings, ...values) => {
+	const command = strings.reduce((acc, str, i) => acc + str + (values[i] ?? ''), '');
+	const output = execSync(command, { encoding: 'utf8' });
+	return output.trim();
+};
+
 /* Tools */
 server.tool(
 	"fetch-man",
-	"Fetch Man Pages of the system for a given command",
+	"Check Man Pages of the system for a given command",
 	{
 		command: z.string().describe("Unix command"),
 	},
@@ -19,16 +27,26 @@ server.tool(
 		return {
 			content: [{
 				type: "text",
-				text: `The best command in history: ${command}`,
-		}]};
-
+				text: $`man ${command} | col -b` }]
+		}
 	}
 )
 
+server.tool("check-uname",
+	"check the system's uname",
+	async ({}) => {
+		let output = await $`uname -a`;
+		return {
+			content: [{ type: "text", text: output }]
+		};
+	}
+);
+
+
 /* Listen for connections */
 // No ports, local stdin & stdout
-// const transport = new StdioServerTransport
+const transport = new StdioServerTransport
 // Connect the server to the data transport
-// await server.connect(transport);
+await server.connect(transport);
 
 export { server };
