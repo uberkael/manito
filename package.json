@@ -1,0 +1,24 @@
+{
+  "name": "manito",
+  "version": "1.0.0",
+  "description": "MCP for querying and exploring Unix man pages",
+  "homepage": "https://github.com/uberkael/manito#readme",
+  "bugs": {
+    "url": "https://github.com/uberkael/manito/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/uberkael/manito.git"
+  },
+  "license": "ISC",
+  "author": "KaeL",
+  "type": "module",
+  "main": "main.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.15.0",
+    "zod": "^3.25.76"
+  }
+}
