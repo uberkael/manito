@@ -72,17 +72,6 @@ server.tool(
 	}
 )
 
-server.tool("check-uname",
-	"Check The System's Uname",
-	async ({}) => {
-		let output = await $`uname -a`;
-		return {
-			content: [{ type: "text", text: output }]
-		};
-	}
-);
-
-
 /* Listen for connections */
 // No ports, local stdin & stdout
 const transport = new StdioServerTransport
