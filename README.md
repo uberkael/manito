@@ -14,3 +14,9 @@ MCP for querying and exploring Unix man pages
 	]
 }
 ```
+
+## Debug
+
+Ejecutar shttps.ts
+`npx -y @modelcontextprotocol/inspector `
+conectar con el token y [http://localhost:3000/mcp](http://localhost:3000/mcp)
