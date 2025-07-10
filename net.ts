@@ -18,7 +18,7 @@ const setupServer = async () => {
 app.post('/mcp', async (req: Request, res: Response) => {
 	console.log('Received MCP request:', req.body);
 	try {
-			await transport.handleRequest(req, res, req.body);
+		await transport.handleRequest(req, res, req.body);
 	} catch (error) {
 		console.error('Error handling MCP request:', error);
 		if (!res.headersSent) {
@@ -58,7 +58,6 @@ app.delete('/mcp', async (req: Request, res: Response) => {
 	}));
 });
 
-// Start the server
 const PORT = process.env.PORT || 3000;
 setupServer().then(() => {
 	app.listen(PORT, () => {
