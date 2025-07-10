@@ -18,7 +18,7 @@ const $ = (strings, ...values) => {
 };
 
 /* Tools */
-function allPages(command: string): string[] {
+function allManPages(command: string): string[] {
 	try {
 		return $`man -f ${command}`.split("\n");
 	}
@@ -27,25 +27,47 @@ function allPages(command: string): string[] {
 	}
 }
 
+function getManPage(command: string): string {
+	try {
+		// return $`man ${command} | col -b`;
+		const man = $`man ${command}`;
+		return `System Reference Manual (Man Page) for ${command}:\n${man}`;
+	}
+	catch (error) {
+		return `No manual entry for ${command}`;
+	}
+}
+
+function getHelpText(command): string {
+	const helpArguments = ["--help", "-h"];
+	for (const arg of helpArguments) {
+		try {
+			const help = $`${command} ${arg}`
+			return `Help for ${command}:\n${help}`;
+		} catch (error) {
+			continue
+		}
+	}
+	return `No help entry for ${command}`;
+}
+
 server.tool(
 	"fetch-man",
 	"Check Man Page for a given command",
 	{ command: z.string().describe("Unix Command") },
 	async ({ command }) => {
-		const pages = allPages(command);
-		console.log(`Found ${pages.length} pages for command: ${command}`);
+		const pages = allManPages(command);
 		if (pages.length === 0) {
 			return {
 				content: [{
 					type: "text",
-					text: `No manual entry for ${command}` }]
+					text: getHelpText(command) }]
 			};
 		}
 		return {
 			content: [{
 				type: "text",
-				// text: $`man ${command} | col -b` }]
-				text: $`man ${command}` }]
+				text: getManPage(command) }]
 		}
 	}
 )
