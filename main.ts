@@ -52,8 +52,8 @@ function getHelpText(command): string {
 }
 
 server.tool(
-	"fetch-man",
-	"Check Man Page for a given command",
+	"man-or-help",
+	"Check Man Page for a given command or return command Help",
 	{ command: z.string().describe("Unix Command") },
 	async ({ command }) => {
 		const pages = allManPages(command);
