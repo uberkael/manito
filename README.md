@@ -1,8 +1,11 @@
 # Manito
-MCP for querying and exploring Unix man pages
+**MCP** for querying and exploring Unix **Man** Pages
 
+In case the `man` page does not exist, it falls back to the command's help output or `--help`.
 
-## Install
+## Setup
+
+#### NPX:
 
 ```json
 "manito": {
@@ -15,8 +18,28 @@ MCP for querying and exploring Unix man pages
 }
 ```
 
-## Debug
+#### Bun:
 
-Ejecutar shttps.ts
-`npx -y @modelcontextprotocol/inspector `
-conectar con el token y [http://localhost:3000/mcp](http://localhost:3000/mcp)
+```json
+"manito": {
+	"command": "bun",
+	"args": [
+		"path_to/main.ts"
+	]
+}
+```
+
+#### Streamable HTTP:
+
+Launch the server with:
+
+`npx -y tsx net.ts`
+or
+`bun net.ts`
+
+```json
+"manito": {
+	"type": "http",
+	"url": "http://localhost:3000/mcp"
+}
+```
