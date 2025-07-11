@@ -39,7 +39,7 @@ function getManPage(command: string): string {
 }
 
 function getHelpText(command): string {
-	const helpArguments = ["--help", "-h"];
+	const helpArguments = ["--help", "-h", "help"];
 	for (const arg of helpArguments) {
 		try {
 			const help = $`${command} ${arg}`
