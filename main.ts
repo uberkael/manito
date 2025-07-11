@@ -9,13 +9,20 @@ const server = new McpServer({
 	version: "1.0",
 })
 
-// Emulate $ from bun
-const $ = (strings, ...values) => {
-	const command = strings.reduce(
-		(acc, str, i) => acc + str + (values[i] ?? ''), '');
-	const output = execSync(command, { encoding: 'utf8' });
-	return output.trim();
-};
+/* Emulate $ from bun - Only if it's not already defined */
+declare global {
+	var $: (strings: TemplateStringsArray, ...values: any[]) => string;
+}
+
+if (typeof globalThis.$ === "undefined" && typeof ($ as any) === "undefined") {
+	const $: (strings: TemplateStringsArray, ...values: any[]) => string = (strings, ...values) => {
+		const command = strings.reduce(
+			(acc, str, i) => acc + str + (values[i] ?? ''), '');
+		const output = execSync(command, { encoding: 'utf8' });
+		return output.trim();
+	};
+	globalThis.$ = $;
+}
 
 /* Tools */
 function allManPages(command: string): string[] {
